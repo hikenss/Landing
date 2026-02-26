@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="facebook-domain-verification" content="jfjzw6p6ih3e6jn433h6kl848r3oxr" />
+  <title>Acesso Privado</title>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1186972756842554');
+  var pageViewEventId = 'pv_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
+  fbq('trackSingle', '1186972756842554', 'PageView', {}, {eventID: pageViewEventId});
+  </script>
+  
+  <script>
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : null;
+  }
+
+  function setCookie(name, value, days) {
+    var expires = '';
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = '; expires=' + date.toUTCString();
+    }
+    document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/';
+  }
+
+  function getFbp() {
+    var fbp = getCookie('_fbp');
+    if (fbp) return fbp;
+    var ts = Date.now();
+    var rand = Math.floor(Math.random() * 10000000000);
+    fbp = 'fb.1.' + ts + '.' + rand;
+    setCookie('_fbp', fbp, 90);
+    return fbp;
+  }
+
+  function getFbc() {
+    var existing = getCookie('_fbc');
+    if (existing) return existing;
+    var params = new URLSearchParams(window.location.search);
+    var fbclid = params.get('fbclid');
+    if (!fbclid) return null;
+    var ts = Math.floor(Date.now() / 1000);
+    var fbc = 'fb.1.' + ts + '.' + fbclid;
+    setCookie('_fbc', fbc, 90);
+    return fbc;
+  }
+
+  function buildStartParam(payload) {
+    var json = JSON.stringify(payload);
+    var b64 = btoa(unescape(encodeURIComponent(json)));
+    return encodeURIComponent(b64);
+  }
+
+  var payload = { free_access: true };
+  var fbp = getFbp();
+  if (fbp) payload.fbp = fbp;
+  var fbc = getFbc();
+  if (fbc) payload.fbc = fbc;
+  if (navigator && navigator.userAgent) payload.ua = navigator.userAgent;
+
+  var capiJoinEndpoint = 'https://botpnv.shop/meta-capi/join-submundo';
+
+  // Redireciona para o BOT (não para o grupo)
+  var telegramUrl = 'https://t.me/vipssnbot?start=' + buildStartParam(payload);
+
+  function setTelegramLink() {
+    var btn = document.getElementById('cta');
+    if (btn) btn.href = telegramUrl;
+  }
+
+  // Evento Pixel personalizado no clique do botão
+  function trackLeadQualificado() {
+    var leadEventId = 'lead_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
+    var joinEventId = 'join_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
+    fbq('trackCustom', 'LeadQualificado', {}, {eventID: leadEventId});
+    fbq('trackCustom', 'JoinSubmundo', {}, {eventID: joinEventId});
+    return joinEventId;
+  }
+
+  function sendJoinSubmundoCapi(eventId) {
+    var capiPayload = {
+      event_id: eventId,
+      event_source_url: window.location.href,
+      fbc: payload.fbc || null,
+      fbp: payload.fbp || null,
+      ua: navigator && navigator.userAgent ? navigator.userAgent : null
+    };
+
+    try {
+      if (navigator.sendBeacon) {
+        var blob = new Blob([JSON.stringify(capiPayload)], { type: 'application/json' });
+        navigator.sendBeacon(capiJoinEndpoint, blob);
+        return;
+      }
+      fetch(capiJoinEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(capiPayload),
+        keepalive: true
+      }).catch(function(){});
+    } catch (e) {}
+  }
+  // Remove redirecionamento automático, só dispara evento e vai pro bot se clicar
+  function handleCtaClick(e) {
+    var eventId = trackLeadQualificado();
+    sendJoinSubmundoCapi(eventId);
+    setTimeout(function() {
+      window.location.href = telegramUrl;
+    }, 120);
+    return false;
+  }
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1186972756842554&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  
+  <style>
+    body {
+      background: #fff;
+      color: #222;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+      padding: 32px 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      background: #fafafa;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+    }
+    a {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #229ED9;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+    }
+    a:hover {
+      background: #176cae;
+    }
+  </style>
+  
+  <script>
+  // Contador regressivo visual
+  let seconds = 3;
+  const interval = setInterval(function() {
+    seconds--;
+    const el = document.getElementById('countdown');
+    if (el) el.textContent = seconds;
+    if (seconds <= 0) clearInterval(interval);
+  }, 1000);
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Acesso Privado</h1>
+    <p>Convite com vagas limitadas hoje.<br>Entrada única por <strong>R$ 14,90</strong>.</p>
+    <a id="cta" href="#" onclick="handleCtaClick(event);" target="_blank">ENTRAR AGORA</a>
+  </div>
+
+  <script>
+    // Ajusta o href do CTA assim que a página carrega
+    setTelegramLink();
+  </script>
+</body>
+</html>
