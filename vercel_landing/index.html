@@ -65,10 +65,36 @@
   }
 
   var payload = { free_access: true };
+  var urlParams = new URLSearchParams(window.location.search);
+
+  function pickParam(keys) {
+    for (var i = 0; i < keys.length; i++) {
+      var value = urlParams.get(keys[i]);
+      if (value) return value;
+    }
+    return null;
+  }
+
   var fbp = getFbp();
   if (fbp) payload.fbp = fbp;
   var fbc = getFbc();
   if (fbc) payload.fbc = fbc;
+  var fbclid = urlParams.get('fbclid');
+  if (fbclid) payload.fbclid = fbclid;
+
+  payload.utm_source = pickParam(['utm_source']);
+  payload.utm_medium = pickParam(['utm_medium']);
+  payload.utm_campaign = pickParam(['utm_campaign', 'campaign_name']);
+  payload.utm_content = pickParam(['utm_content']);
+  payload.utm_term = pickParam(['utm_term']);
+  payload.utm_adset = pickParam(['utm_adset', 'adset_name']);
+  payload.utm_ad = pickParam(['utm_ad', 'ad_name']);
+  payload.campaign_id = pickParam(['campaign_id']);
+  payload.adset_id = pickParam(['adset_id']);
+  payload.ad_id = pickParam(['ad_id']);
+  payload.landing_url = window.location.href;
+  payload.click_ts = Math.floor(Date.now() / 1000);
+
   if (navigator && navigator.userAgent) payload.ua = navigator.userAgent;
 
   var capiJoinEndpoint = 'https://botpnv.shop/meta-capi/join-submundo';
