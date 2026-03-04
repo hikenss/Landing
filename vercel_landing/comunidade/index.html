@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="facebook-domain-verification" content="jfjzw6p6ih3e6jn433h6kl848r3oxr" />
+  <title>Comunidade Gratuita | Evolução Masculina</title>
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1186972756842554');
+    var pageViewEventId = 'pv_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
+    fbq('trackSingle', '1186972756842554', 'PageView', {}, {eventID: pageViewEventId});
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1186972756842554&ev=PageView&noscript=1" /></noscript>
+  <style>
+    :root { --bg:#f5f7fb; --card:#fff; --text:#1e2430; --muted:#5a6477; --brand:#1f6feb; --line:#dde4f0; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+    .shell { width:min(900px,92%); margin:0 auto; }
+    header, footer { background:var(--card); }
+    header { border-bottom:1px solid var(--line); }
+    footer { border-top:1px solid var(--line); padding:18px 0; color:var(--muted); font-size:.92rem; }
+    .nav { display:flex; justify-content:space-between; gap:12px; align-items:center; padding:16px 0; }
+    .brand { font-weight:700; color:var(--text); text-decoration:none; }
+    nav { display:flex; gap:14px; flex-wrap:wrap; }
+    nav a, .footer-links a { text-decoration:none; color:var(--muted); font-weight:600; }
+    main { margin:26px auto 32px; }
+    .panel { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:28px; }
+    h1 { margin-top:0; line-height:1.3; font-size:clamp(1.7rem,4vw,2.3rem); }
+    p { color:#3e4758; margin:0 0 14px; }
+    .btn { display:inline-block; margin-top:8px; padding:12px 18px; border-radius:8px; background:var(--brand); color:#fff; text-decoration:none; font-weight:700; }
+    .footer-links { display:flex; gap:14px; flex-wrap:wrap; margin-top:8px; }
+  </style>
+  <script>
+    function getCookie(name) {
+      var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? decodeURIComponent(match[2]) : null;
+    }
+
+    function setCookie(name, value, days) {
+      var expires = '';
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = '; expires=' + date.toUTCString();
+      }
+      document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/';
+    }
+
+    function getFbp() {
+      var fbp = getCookie('_fbp');
+      if (fbp) return fbp;
+      var ts = Date.now();
+      var rand = Math.floor(Math.random() * 10000000000);
+      fbp = 'fb.1.' + ts + '.' + rand;
+      setCookie('_fbp', fbp, 90);
+      return fbp;
+    }
+
+    function getFbc() {
+      var existing = getCookie('_fbc');
+      if (existing) return existing;
+      var params = new URLSearchParams(window.location.search);
+      var fbclid = params.get('fbclid');
+      if (!fbclid) return null;
+      var ts = Math.floor(Date.now() / 1000);
+      var fbc = 'fb.1.' + ts + '.' + fbclid;
+      setCookie('_fbc', fbc, 90);
+      return fbc;
+    }
+
+    function buildStartParam(payload) {
+      var json = JSON.stringify(payload);
+      var b64 = btoa(unescape(encodeURIComponent(json)));
+      return encodeURIComponent(b64);
+    }
+
+    var payload = { free_access: true };
+    var urlParams = new URLSearchParams(window.location.search);
+
+    function pickParam(keys) {
+      for (var i = 0; i < keys.length; i++) {
+        var value = urlParams.get(keys[i]);
+        if (value) return value;
+      }
+      return null;
+    }
+
+    var fbp = getFbp();
+    if (fbp) payload.fbp = fbp;
+    var fbc = getFbc();
+    if (fbc) payload.fbc = fbc;
+    var fbclid = urlParams.get('fbclid');
+    if (fbclid) payload.fbclid = fbclid;
+
+    payload.utm_source = pickParam(['utm_source']);
+    payload.utm_medium = pickParam(['utm_medium']);
+    payload.utm_campaign = pickParam(['utm_campaign', 'campaign_name']);
+    payload.utm_content = pickParam(['utm_content']);
+    payload.utm_term = pickParam(['utm_term']);
+    payload.utm_adset = pickParam(['utm_adset', 'adset_name']);
+    payload.utm_ad = pickParam(['utm_ad', 'ad_name']);
+    payload.campaign_id = pickParam(['campaign_id']);
+    payload.adset_id = pickParam(['adset_id']);
+    payload.ad_id = pickParam(['ad_id']);
+    payload.landing_url = window.location.href;
+    payload.click_ts = Math.floor(Date.now() / 1000);
+
+    if (navigator && navigator.userAgent) payload.ua = navigator.userAgent;
+
+    var capiJoinEndpoint = 'https://botpnv.shop/meta-capi/join-submundo';
+    var telegramUrl = 'https://t.me/vipssnbot?start=' + buildStartParam(payload);
+
+    function setTelegramLink() {
+      var btn = document.getElementById('cta');
+      if (btn) btn.href = telegramUrl;
+    }
+
+    function trackLeadQualificado() {
+      var leadEventId = 'lead_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
+      var joinEventId = 'join_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
+      fbq('trackCustom', 'LeadQualificado', {}, {eventID: leadEventId});
+      fbq('trackCustom', 'JoinSubmundo', {}, {eventID: joinEventId});
+      return joinEventId;
+    }
+
+    function sendJoinSubmundoCapi(eventId) {
+      var capiPayload = {
+        event_id: eventId,
+        event_source_url: window.location.href,
+        fbc: payload.fbc || null,
+        fbp: payload.fbp || null,
+        ua: navigator && navigator.userAgent ? navigator.userAgent : null
+      };
+
+      try {
+        if (navigator.sendBeacon) {
+          var blob = new Blob([JSON.stringify(capiPayload)], { type: 'application/json' });
+          navigator.sendBeacon(capiJoinEndpoint, blob);
+          return;
+        }
+        fetch(capiJoinEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(capiPayload),
+          keepalive: true
+        }).catch(function(){});
+      } catch (e) {}
+    }
+
+    function handleCtaClick() {
+      var eventId = trackLeadQualificado();
+      sendJoinSubmundoCapi(eventId);
+      setTimeout(function() {
+        window.location.href = telegramUrl;
+      }, 120);
+      return false;
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="shell nav">
+      <a class="brand" href="/">Portal Evolução Masculina</a>
+      <nav>
+        <a href="/artigo-1/">Artigo 1</a>
+        <a href="/artigo-2/">Artigo 2</a>
+        <a href="/comunidade/">Comunidade</a>
+        <a href="/sobre/">Sobre</a>
+        <a href="/contato/">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="panel">
+      <h1>Comunidade Gratuita</h1>
+      <p>Criamos uma comunidade privada para homens interessados em evolução pessoal e relacionamento.</p>
+      <p>O acesso é gratuito. Versões ampliadas do conteúdo são disponibilizadas periodicamente para membros ativos.</p>
+      <p>Todo o material segue foco educacional, com orientações de comunicação, hábitos e desenvolvimento de postura.</p>
+      <a id="cta" class="btn" href="#" onclick="return handleCtaClick();">Participar da Comunidade Gratuita</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div>© 2026 Portal Evolução Masculina. Conteúdo digital de caráter educacional.</div>
+      <div class="footer-links">
+        <a href="/sobre/">Sobre</a>
+        <a href="/contato/">Contato</a>
+        <a href="/politica-de-privacidade/">Política de Privacidade</a>
+        <a href="/termos-de-uso/">Termos de Uso</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    setTelegramLink();
+  </script>
+</body>
+</html>

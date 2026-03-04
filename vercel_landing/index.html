@@ -4,220 +4,200 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="facebook-domain-verification" content="jfjzw6p6ih3e6jn433h6kl848r3oxr" />
-  <title>Entrar no Grupo Free</title>
-  <!-- Meta Pixel Code -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1186972756842554');
-  var pageViewEventId = 'pv_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
-  fbq('trackSingle', '1186972756842554', 'PageView', {}, {eventID: pageViewEventId});
-  </script>
-  
-  <script>
-  function getCookie(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? decodeURIComponent(match[2]) : null;
-  }
-
-  function setCookie(name, value, days) {
-    var expires = '';
-    if (days) {
-      var date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = '; expires=' + date.toUTCString();
-    }
-    document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/';
-  }
-
-  function getFbp() {
-    var fbp = getCookie('_fbp');
-    if (fbp) return fbp;
-    var ts = Date.now();
-    var rand = Math.floor(Math.random() * 10000000000);
-    fbp = 'fb.1.' + ts + '.' + rand;
-    setCookie('_fbp', fbp, 90);
-    return fbp;
-  }
-
-  function getFbc() {
-    var existing = getCookie('_fbc');
-    if (existing) return existing;
-    var params = new URLSearchParams(window.location.search);
-    var fbclid = params.get('fbclid');
-    if (!fbclid) return null;
-    var ts = Math.floor(Date.now() / 1000);
-    var fbc = 'fb.1.' + ts + '.' + fbclid;
-    setCookie('_fbc', fbc, 90);
-    return fbc;
-  }
-
-  function buildStartParam(payload) {
-    var json = JSON.stringify(payload);
-    var b64 = btoa(unescape(encodeURIComponent(json)));
-    return encodeURIComponent(b64);
-  }
-
-  var payload = { free_access: true };
-  var urlParams = new URLSearchParams(window.location.search);
-
-  function pickParam(keys) {
-    for (var i = 0; i < keys.length; i++) {
-      var value = urlParams.get(keys[i]);
-      if (value) return value;
-    }
-    return null;
-  }
-
-  var fbp = getFbp();
-  if (fbp) payload.fbp = fbp;
-  var fbc = getFbc();
-  if (fbc) payload.fbc = fbc;
-  var fbclid = urlParams.get('fbclid');
-  if (fbclid) payload.fbclid = fbclid;
-
-  payload.utm_source = pickParam(['utm_source']);
-  payload.utm_medium = pickParam(['utm_medium']);
-  payload.utm_campaign = pickParam(['utm_campaign', 'campaign_name']);
-  payload.utm_content = pickParam(['utm_content']);
-  payload.utm_term = pickParam(['utm_term']);
-  payload.utm_adset = pickParam(['utm_adset', 'adset_name']);
-  payload.utm_ad = pickParam(['utm_ad', 'ad_name']);
-  payload.campaign_id = pickParam(['campaign_id']);
-  payload.adset_id = pickParam(['adset_id']);
-  payload.ad_id = pickParam(['ad_id']);
-  payload.landing_url = window.location.href;
-  payload.click_ts = Math.floor(Date.now() / 1000);
-
-  if (navigator && navigator.userAgent) payload.ua = navigator.userAgent;
-
-  var capiJoinEndpoint = 'https://botpnv.shop/meta-capi/join-submundo';
-
-  // Redireciona para o BOT (não para o grupo)
-  var telegramUrl = 'https://t.me/vipssnbot?start=' + buildStartParam(payload);
-
-  function setTelegramLink() {
-    var btn = document.getElementById('cta');
-    if (btn) btn.href = telegramUrl;
-  }
-
-  // Evento Pixel personalizado no clique do botão
-  function trackLeadQualificado() {
-    var leadEventId = 'lead_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
-    var joinEventId = 'join_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
-    fbq('trackCustom', 'LeadQualificado', {}, {eventID: leadEventId});
-    fbq('trackCustom', 'JoinSubmundo', {}, {eventID: joinEventId});
-    return joinEventId;
-  }
-
-  function sendJoinSubmundoCapi(eventId) {
-    var capiPayload = {
-      event_id: eventId,
-      event_source_url: window.location.href,
-      fbc: payload.fbc || null,
-      fbp: payload.fbp || null,
-      ua: navigator && navigator.userAgent ? navigator.userAgent : null
-    };
-
-    try {
-      if (navigator.sendBeacon) {
-        var blob = new Blob([JSON.stringify(capiPayload)], { type: 'application/json' });
-        navigator.sendBeacon(capiJoinEndpoint, blob);
-        return;
-      }
-      fetch(capiJoinEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(capiPayload),
-        keepalive: true
-      }).catch(function(){});
-    } catch (e) {}
-  }
-  // Remove redirecionamento automático, só dispara evento e vai pro bot se clicar
-  function handleCtaClick(e) {
-    var eventId = trackLeadQualificado();
-    sendJoinSubmundoCapi(eventId);
-    setTimeout(function() {
-      window.location.href = telegramUrl;
-    }, 120);
-    return false;
-  }
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=1186972756842554&ev=PageView&noscript=1"
-  /></noscript>
-  <!-- End Meta Pixel Code -->
-  
+  <title>Conteúdo Masculino | Desenvolvimento e Relacionamento</title>
   <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1e2430;
+      --muted: #5a6477;
+      --brand: #1f6feb;
+      --line: #dde4f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: #fff;
-      color: #222;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
     }
-    .container {
-      text-align: center;
-      padding: 32px 24px;
-      border-radius: 12px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-      background: #fafafa;
+
+    .shell {
+      width: min(1024px, 92%);
+      margin: 0 auto;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 12px;
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: var(--card);
     }
-    p {
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
+    }
+
+    .brand {
       font-size: 1.1rem;
-      margin-bottom: 24px;
-    }
-    a {
-      display: inline-block;
-      padding: 12px 28px;
-      background: #229ED9;
-      color: #fff;
-      border-radius: 6px;
+      font-weight: 700;
+      color: var(--text);
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      transition: background 0.2s;
     }
-    a:hover {
-      background: #176cae;
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .hero {
+      margin: 28px 0 22px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    h1, h2 {
+      line-height: 1.25;
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: var(--brand);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      background: var(--card);
+      padding: 18px 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
     }
   </style>
-  
-  <script>
-  // Contador regressivo visual
-  let seconds = 3;
-  const interval = setInterval(function() {
-    seconds--;
-    const el = document.getElementById('countdown');
-    if (el) el.textContent = seconds;
-    if (seconds <= 0) clearInterval(interval);
-  }, 1000);
-  </script>
 </head>
 <body>
-  <div class="container">
-    <h1>Grupo Free Liberado</h1>
-    <p>Entre no grupo gratuito para receber o esquenta e os conteúdos iniciais.<br>O acesso ao VIP é liberado por convite, em janelas limitadas.</p>
-    <a id="cta" href="#" onclick="handleCtaClick(event);" target="_blank">ENTRAR NO FREE</a>
-  </div>
+  <header>
+    <div class="shell nav">
+      <a class="brand" href="/">Portal Evolução Masculina</a>
+      <nav class="links">
+        <a href="/artigo-1/">Artigo 1</a>
+        <a href="/artigo-2/">Artigo 2</a>
+        <a href="/comunidade/">Comunidade</a>
+        <a href="/sobre/">Sobre</a>
+        <a href="/contato/">Contato</a>
+      </nav>
+    </div>
+  </header>
 
-  <script>
-    // Ajusta o href do CTA assim que a página carrega
-    setTelegramLink();
-  </script>
+  <main class="shell">
+    <section class="hero">
+      <h1>Conteúdos sobre confiança, relacionamento e evolução pessoal masculina</h1>
+      <p>
+        Este projeto reúne materiais educativos para homens que desejam melhorar comunicação,
+        presença e constância no dia a dia.
+      </p>
+      <p>
+        O foco é desenvolvimento pessoal com linguagem prática: hábitos, inteligência emocional,
+        autoestima e tomada de decisão.
+      </p>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <h3>Leituras em destaque</h3>
+        <p>Artigos aprofundados com estratégias comportamentais e ferramentas aplicáveis na rotina.</p>
+        <a class="btn" href="/artigo-1/">Ler Artigo 1</a>
+      </article>
+
+      <article class="card">
+        <h3>Biblioteca de conteúdo</h3>
+        <p>Novos textos sobre autoconfiança, relacionamento e evolução pessoal com atualização contínua.</p>
+        <a class="btn" href="/artigo-2/">Ler Artigo 2</a>
+      </article>
+
+      <article class="card">
+        <h3>Comunidade gratuita</h3>
+        <p>Espaço para acompanhar versões ampliadas dos conteúdos e receber novos materiais periodicamente.</p>
+        <a class="btn" href="/comunidade/">Acessar Comunidade</a>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div>© 2026 Portal Evolução Masculina. Conteúdo digital de caráter educacional.</div>
+      <div class="footer-links">
+        <a href="/sobre/">Sobre</a>
+        <a href="/contato/">Contato</a>
+        <a href="/politica-de-privacidade/">Política de Privacidade</a>
+        <a href="/termos-de-uso/">Termos de Uso</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
